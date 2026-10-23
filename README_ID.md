@@ -1,33 +1,23 @@
-# Murottal Studio — Proyek Android awal
+# Murottal Studio — Proyek Android
 
-Proyek sumber awal untuk aplikasi Android pembuat video murottal Reels.
+**Penting:** Ini kode sumber/prototipe, bukan APK siap instal dan belum diuji pada perangkat nyata. APK dicoba dibangun melalui GitHub Actions.
 
-## Fitur pada prototipe
-- UI Android berbasis WebView.
-- Memuat daftar 114 surah dan teks/terjemahan dari API online.
-- Pilihan qari online (ID edisi audio dapat berbeda menurut ketersediaan penyedia).
-- Background visual bawaan berbasis SVG yang ikut disertakan di aplikasi.
-- Pratinjau vertikal 9:16.
-- Tombol ekspor video prototipe berbasis browser MediaRecorder; dukungan ekspor audio/video bergantung pada versi WebView dan dukungan CORS penyedia audio.
+## Isi proyek
+- `app/` — kode aplikasi Android dan aset.
+- `build.gradle`, `settings.gradle`, `gradle.properties` — konfigurasi Gradle.
+- `.github/workflows/android-build.yml` — otomatisasi build APK di GitHub Actions.
 
-## Penting
-Ini adalah **proyek sumber/prototipe**, bukan APK yang sudah dikompilasi atau diuji. Untuk menghasilkan APK:
-1. Buka folder proyek di Android Studio.
-2. Pastikan Android SDK dan Gradle tersedia.
-3. Sinkronkan Gradle.
-4. Build > Build Bundle(s) / APK(s) > Build APK(s).
+## Upload lewat HP
+1. Unduh ZIP ini lalu ekstrak.
+2. Di GitHub, buka repository `Murottal-Studio` → **Add file** → **Upload files**.
+3. Upload isi folder `MurottalStudio_Project`, bukan file ZIP-nya. Pastikan folder `app` beserta isinya ikut terunggah.
+4. Folder `.github` diawali titik dan mungkin disembunyikan File Manager. Aktifkan **Tampilkan file tersembunyi / Show hidden files** dan pastikan `.github/workflows/android-build.yml` ikut terunggah.
+5. Setelah upload, buka tab **Actions**. Pilih workflow **Build Murottal Studio APK** dan jalankan **Run workflow** jika belum berjalan otomatis.
+6. Jika build berhasil, buka hasil run dan unduh artifact `murottal-studio-debug-apk`.
 
-API dan audio memerlukan internet. Verifikasi teks Al-Qur'an dan kecocokan audio sebelum menerbitkan konten. Periksa ketentuan penggunaan/atribusi setiap penyedia. Background SVG lokal boleh digunakan sebagai aset visual aplikasi.
-
-## Data online
-Prototipe menggunakan endpoint publik api.alquran.cloud untuk data surah dan ayat. Ketersediaan ID qari/audio perlu diuji dan dapat berubah.
+Catatan: build belum dijamin berhasil; jika GitHub Actions menampilkan error, perlu diperbaiki berdasarkan log error tersebut.
 
 
-## Build otomatis dari HP dengan GitHub Actions
-1. Buat repository baru di GitHub melalui browser HP.
-2. Unggah seluruh isi ZIP ini ke repository (pastikan folder `.github/workflows/android-build.yml` ikut terunggah).
-3. Buka tab **Actions**, pilih **Build Murottal Studio APK**, lalu tekan **Run workflow** bila workflow belum berjalan otomatis.
-4. Tunggu job selesai dengan status hijau.
-5. Buka hasil run dan unduh artifact `murottal-studio-debug-apk`. Ekstrak ZIP artifact untuk mendapatkan `app-debug.apk`.
+## Catatan Gradle Wrapper
 
-Catatan: build pertama bisa gagal jika versi Android Gradle Plugin/SDK atau konfigurasi proyek perlu penyesuaian. Workflow ini belum membuktikan bahwa aplikasi sudah berhasil dibangun atau diuji. APK debug bukan APK rilis bertanda tangan untuk distribusi luas.
+Proyek ini tidak membutuhkan file `gradlew` atau folder `gradle/wrapper` untuk workflow GitHub Actions yang disertakan. Workflow memasang Gradle 8.9 di runner GitHub, lalu menjalankan `gradle --no-daemon assembleDebug`. Pastikan folder `.github/workflows` ikut diunggah agar workflow tersedia.
